@@ -1,6 +1,8 @@
-type ExampleEntity @entity {
-  id: Bytes!
-  count: BigInt!
-  _owner: Bytes! # address
-  tokenId: BigInt! # uint256
+type GeistID @entity {
+  id: String!
+  owner: Bytes!
+  tokenId: BigInt!
+  expiresAt: BigInt!
+  createdAt: BigInt!
+  name: String!
 }
