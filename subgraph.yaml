@@ -1,0 +1,47 @@
+specVersion: 1.0.0
+indexerHints:
+  prune: auto
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: GeistDiamond
+    network: mainnet
+    source:
+      address: "0x9B8ABDFD4d6A09eff1bE25F0280124fa5a707465"
+      abi: GeistDiamond
+      startBlock: 4157
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - MembershipExtended
+        - Approval
+        - ApprovalForAll
+        - GeistIDCreated
+        - Initialized
+        - Transfer
+        - DiamondCut
+        - OwnershipTransferred
+      abis:
+        - name: GeistDiamond
+          file: ./abis/GeistDiamond.json
+      eventHandlers:
+        - event: MembershipExtended(address,uint256,uint256,uint256,uint256)
+          handler: handleMembershipExtended
+        - event: Approval(indexed address,indexed address,indexed uint256)
+          handler: handleApproval
+        - event: ApprovalForAll(indexed address,indexed address,bool)
+          handler: handleApprovalForAll
+        - event: GeistIDCreated(address,uint256,string,address,uint256,uint256,uint256)
+          handler: handleGeistIDCreated
+        - event: Initialized(uint64)
+          handler: handleInitialized
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+        - event: DiamondCut((address,uint8,bytes4[])[],address,bytes)
+          handler: handleDiamondCut
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+      file: ./src/geist-diamond.ts
