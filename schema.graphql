@@ -5,4 +5,12 @@ type GeistID @entity {
   expiresAt: BigInt!
   createdAt: BigInt!
   name: String!
+  extensions: [MembershipExtension!]! @derivedFrom(field: "geistID")
+}
+
+type MembershipExtension @entity {
+  id: String!
+  geistID: GeistID!
+  expiresAt: BigInt!
+  extendedAt: BigInt!
 }

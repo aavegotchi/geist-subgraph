@@ -1,16 +1,12 @@
-import { BigInt } from "@graphprotocol/graph-ts";
 import {
-  GeistDiamond,
   MembershipExtended,
   Approval,
   ApprovalForAll,
   GeistIDCreated,
-  Initialized,
   Transfer,
-  DiamondCut,
   OwnershipTransferred,
 } from "../generated/GeistDiamond/GeistDiamond";
-import { GeistID } from "../generated/schema";
+import { GeistID, MembershipExtension } from "../generated/schema";
 
 export function handleMembershipExtended(event: MembershipExtended): void {
   // Entities can be loaded from the store using a string ID; this ID
@@ -19,6 +15,14 @@ export function handleMembershipExtended(event: MembershipExtended): void {
   let geistID = new GeistID(event.params.tokenId.toString());
   geistID.expiresAt = event.params.expiresOn;
   geistID.save();
+
+  let extension = new MembershipExtension(
+    geistID.id + event.block.timestamp.toString()
+  ); //concatenate geistID.id and extendedAt
+  extension.geistID = geistID.id;
+  extension.expiresAt = event.params.expiresOn;
+  extension.extendedAt = event.block.timestamp;
+  extension.save();
 }
 
 export function handleApproval(event: Approval): void {}
