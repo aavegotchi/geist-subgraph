@@ -57,6 +57,7 @@ export function handleGeistIDCreated(event: GeistIDCreated): void {
   let invite = new Invite(geistID.id);
   invite.referrerGeistID = event.params.referrer.toHexString();
   invite.createdAt = event.block.timestamp;
+  invite.geistID = event.params.owner.toHexString();
   invite.save();
 }
 

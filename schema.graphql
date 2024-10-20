@@ -11,6 +11,7 @@ type GeistID @entity {
 
 type Invite @entity {
   id: String!
+  geistID: GeistID!
   referrerGeistID: GeistID!
   createdAt: BigInt!
 }
