@@ -9,12 +9,20 @@ import {
   DiamondCut,
 } from "../generated/GeistDiamond/GeistDiamond";
 import { GeistID, Invite, MembershipExtension } from "../generated/schema";
-
+import { log } from "matchstick-as";
 export function handleMembershipExtended(event: MembershipExtended): void {
   // Entities can be loaded from the store using a string ID; this ID
   // needs to be unique across all entities of the same type
 
-  let geistID = new GeistID(event.params.tokenId.toString());
+  let geistID = GeistID.load(event.params.tokenId.toString());
+
+  if (geistID == null) {
+    log.error("GeistID not found for tokenId: {}", [
+      event.params.tokenId.toString(),
+    ]);
+    return;
+  }
+
   geistID.expiresAt = event.params.expiresOn;
   geistID.save();
 
