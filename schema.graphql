@@ -1,11 +1,18 @@
 type GeistID @entity {
-  id: String!
-  owner: Bytes!
+  id: String! # owner.toHexString()
   tokenId: BigInt!
   expiresAt: BigInt!
   createdAt: BigInt!
   name: String!
+  referrer: Bytes!
   extensions: [MembershipExtension!]! @derivedFrom(field: "geistID")
+  invites: [Invite!]! @derivedFrom(field: "referrerGeistID")
+}
+
+type Invite @entity {
+  id: String!
+  referrerGeistID: GeistID!
+  createdAt: BigInt!
 }
 
 type MembershipExtension @entity {

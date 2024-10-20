@@ -8,7 +8,7 @@ import {
   Initialized,
   DiamondCut,
 } from "../generated/GeistDiamond/GeistDiamond";
-import { GeistID, MembershipExtension } from "../generated/schema";
+import { GeistID, Invite, MembershipExtension } from "../generated/schema";
 
 export function handleMembershipExtended(event: MembershipExtended): void {
   // Entities can be loaded from the store using a string ID; this ID
@@ -37,13 +37,19 @@ export function handleDiamondCut(event: DiamondCut): void {}
 export function handleApprovalForAll(event: ApprovalForAll): void {}
 
 export function handleGeistIDCreated(event: GeistIDCreated): void {
-  let geistID = new GeistID(event.params.tokenId.toString());
-  geistID.owner = event.params.owner;
+  let geistID = new GeistID(event.params.owner.toHexString());
   geistID.tokenId = event.params.tokenId;
   geistID.expiresAt = event.params.expiresOn;
   geistID.createdAt = event.params.createdAt;
   geistID.name = event.params.name;
+  geistID.referrer = event.params.referrer;
   geistID.save();
+
+  // create invite
+  let invite = new Invite(geistID.id);
+  invite.referrerGeistID = event.params.referrer.toHexString();
+  invite.createdAt = event.block.timestamp;
+  invite.save();
 }
 
 export function handleTransfer(event: Transfer): void {}
