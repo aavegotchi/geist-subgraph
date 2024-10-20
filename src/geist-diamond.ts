@@ -5,6 +5,8 @@ import {
   GeistIDCreated,
   Transfer,
   OwnershipTransferred,
+  Initialized,
+  DiamondCut,
 } from "../generated/GeistDiamond/GeistDiamond";
 import { GeistID, MembershipExtension } from "../generated/schema";
 
@@ -26,6 +28,10 @@ export function handleMembershipExtended(event: MembershipExtended): void {
 }
 
 export function handleApproval(event: Approval): void {}
+
+export function handleInitialized(event: Initialized): void {}
+
+export function handleDiamondCut(event: DiamondCut): void {}
 
 export function handleApprovalForAll(event: ApprovalForAll): void {}
 
