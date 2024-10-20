@@ -19,11 +19,12 @@ export function handleMembershipExtended(event: MembershipExtended): void {
   geistID.save();
 
   let extension = new MembershipExtension(
-    geistID.id + event.block.timestamp.toString()
+    geistID.id + "-" + event.block.timestamp.toString()
   ); //concatenate geistID.id and extendedAt
   extension.geistID = geistID.id;
   extension.expiresAt = event.params.expiresOn;
   extension.extendedAt = event.block.timestamp;
+
   extension.save();
 }
 
