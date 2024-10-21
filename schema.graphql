@@ -14,6 +14,7 @@ type Invite @entity {
   geistID: GeistID!
   referrerGeistID: GeistID!
   createdAt: BigInt!
+  inviteCode: String
 }
 
 type MembershipExtension @entity {

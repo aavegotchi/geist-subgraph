@@ -53,11 +53,12 @@ export function handleGeistIDCreated(event: GeistIDCreated): void {
   geistID.referrer = event.params.referrer;
   geistID.save();
 
-  // create invite
+  // create invite  or
   let invite = new Invite(geistID.id);
   invite.referrerGeistID = event.params.referrer.toHexString();
   invite.createdAt = event.block.timestamp;
   invite.geistID = event.params.owner.toHexString();
+  invite.inviteCode = event.params.inviteCode;
   invite.save();
 }
 

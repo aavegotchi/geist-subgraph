@@ -34,7 +34,7 @@ dataSources:
           handler: handleApproval
         - event: ApprovalForAll(indexed address,indexed address,bool)
           handler: handleApprovalForAll
-        - event: GeistIDCreated(address,uint256,string,address,uint256,uint256,uint256)
+        - event: GeistIDCreated(address,uint256,string,address,uint256,uint256,uint256,string)
           handler: handleGeistIDCreated
         - event: Initialized(uint64)
           handler: handleInitialized
